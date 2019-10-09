@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+    <style type="text/css">
+        body{margin:0;}
+        ul{margin:0; padding:0; list-style:none; overflow:hidden;}
+        .box{ width:500px; border:1px #000 solid;}li{width:100px; float:left; background-color:#FFFFFF; height:50px; line-height:50px; text-align:center; cursor:pointer;}
+        li.active{background-color:#000000;color:#FFFFFF}
+        .box .content{height:50px; padding:50px;}
+    </style>
+</head>
+<body>
+<div class="box">
+    <x-tab  :cities="cities1"  :contents="contents1"  :n="n"></x-tab>
+    <x-tab  :cities="cities2"  :contents="contents2"  :n="n"></x-tab>
+</div>
+</body>
+<script>
+    Vue.component('x-tab',{	props : ['cities','contents','n'],
+        data(){
+        return {
+            value : this.n
+        }},
+        template:`
+	<div class="box">
+	<ul>
+	<li v-for="city,index of cities" :class="{active:index==value}"	 @mouseover="choose(index)">{{city}}</li>
+	</ul>
+	<div class="content">{{contents[value]}}</div>
+	</div>	`,
+        methods : {
+        choose (index){
+            this.value = index;
+               }
+            }
+        })
+         new Vue({
+             el : ".box",
+             data : {
+                 cities1 : ["选项卡1","选项卡2","选项卡3"],
+                 contents1 : ["这是选项卡1的内容","这是选项卡2的内容","这是选项卡3的内容"],
+                 n : 0,
+                 cities2 : ["文学","数学","历史","地理"],
+                 contents2 : ["《大学》，《中庸》，《论语》，《孟子》",
+                     "《代数几何原理》，《应用数学》，《离散数学》，《几何学》",
+                     "《中国通史》，《中国大历史》，《耶路撒冷三千年》，《中华上下五千年》",
+                     "《世界文化与自然遗产》，《白雪皑皑的北欧》，《游遍中国》，《到世界各地走一圈》"]	}})
+
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="vue1">
+    <my-button></my-button>
+
+</div>
+</body>
+<script>
+    var myButton={
+
+        template:`<div><button @click="jian">-</button>
+        <input type="text"  v-model="count">
+        <button @click="jia">+</button></div>`,
+        data(){
+            return{
+                count:1
+
+            }
+        },
+        watch:{
+            count(){
+                var reg = new RegExp( /^\+?[1-9]\d*$/)
+                if (!reg.test(this.count)) {
+                    alert("只能为大于0的整数");
+                    this.count=1
+                }
+            }
+        },
+        methods:{
+            jian(){
+                this.count--;
+                if (this.count<=0)
+                {
+                    alert("数量小于1不能再减");
+                    this.count=1;
+                }
+            },
+            jia(){
+                this.count++;
+            }
+        }
+    }
+    new Vue({
+        el:"#vue1",
+        components:{
+            'my-button':myButton
+        }
+
+    })
+
+</script>
+</html>
